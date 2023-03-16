@@ -1,7 +1,6 @@
 'use client'
 
 import { Fragment } from 'react'
-import { usePathname } from "next/navigation";
 import { Popover, Transition } from '@headlessui/react'
 import {
   Bars3Icon,
@@ -50,7 +49,7 @@ export default function Header() {
                 key={item.name}
                 href={item.href}
                 target={item.target || ""}
-                className={classNames("text-base font-medium hover:text-gray-900", usePathname() === item.href ? "text-gray-900" : "text-gray-500")}
+                className={classNames("text-base font-medium hover:text-gray-900 text-gray-500")}
               >
                 {item.name}
               </Link>
@@ -59,7 +58,7 @@ export default function Header() {
           
           <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
             <Link href={"/contact"} className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-600">
-              Let's Talk!
+              {"Let's Talk!"}
             </Link>
           </div>
         </div>
@@ -102,7 +101,7 @@ export default function Header() {
                       href={item.href}
                       onClick={() => close()}
                       target={item.target || ""}
-                      className={classNames("text-base font-medium hover:text-gray-700", usePathname() === item.href ? "text-gray-900" : "text-gray-500")}
+                      className={classNames("text-base font-medium hover:text-gray-700 text-gray-500")}
                     >
                       {item.name}
                     </Link>
@@ -115,7 +114,7 @@ export default function Header() {
                     onClick={() => close()}
                     className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-600"
                   >
-                    Let's Talk!
+                    {"Let's Talk!"}
                   </Link>
                 </div>
               </div>

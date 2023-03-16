@@ -1,3 +1,5 @@
+'use client'
+
 import PostCard from "@/components/PostCard";
 import DisqusComments from "@/components/DisqusComments";
 

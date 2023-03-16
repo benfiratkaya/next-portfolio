@@ -29,7 +29,7 @@ const WorkCard = ({
       <div className="flex space-x-1 text-sm text-gray-500 mt-4 mb-1">
         {
           categories.map((category) => (
-              <span>{category.title}</span>
+              <span key={category.title}>{category.title}</span>
           ))
         }
         <span aria-hidden="true">&middot;</span>
