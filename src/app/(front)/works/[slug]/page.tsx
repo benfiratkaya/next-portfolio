@@ -72,7 +72,7 @@ const WorkPage = async ({ params: { slug }}: Props) => {
                 </div>
             </div>
             <div className="md:mx-auto md:max-w-6xl pb-8 md:pb-12">
-                <img src="https://www.clockwork.com.tr/media/3wtpkibp/jeep-1.jpg" alt=""/>
+                {/*<img src="https://www.clockwork.com.tr/media/3wtpkibp/jeep-1.jpg" alt=""/>*/}
             </div>
 
             <div className="mx-auto max-w-7xl pt-12 pb-10 md:pt-20 md:pb-16 px-4 sm:px-6">
@@ -81,7 +81,7 @@ const WorkPage = async ({ params: { slug }}: Props) => {
                 </div>
 
                 <div className="mt-6 md:mt-8 grid gap-16 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-12">
-                    {works.map((post) => (
+                    {/*works.map((post) => (
                         <WorkCard
                             key={post.slug}
                             title={post.title}
@@ -90,7 +90,7 @@ const WorkPage = async ({ params: { slug }}: Props) => {
                             date={post.createdAt}
                             categories={[]}
                         />
-                    ))}
+                    ))*/}
                 </div>
             </div>
         </>
