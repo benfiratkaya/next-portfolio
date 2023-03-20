@@ -1,0 +1,8 @@
+{
+  "title": "Projeler",
+  "description": "Yapmış olduğum/içinde bulunduğum projeleri burada bulabilirsiniz.",
+  "published": "{{date}} tarihinde paylaşıldı",
+  "no-projects": "Proje bulunamadı.",
+  "recent-projects": "Son Projeler",
+  "visit-project": "Projeyi Görüntüle"
+}

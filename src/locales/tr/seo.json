@@ -1,0 +1,22 @@
+{
+  "home": {
+    "title": "Geliştirici, Girişimci ve Proje Sevdalısı",
+    "description": "Yazılım geliştirme ve girişimcilik konularında uzmanlaşmış bir geliştiriciyim. Bu sitede yazılım geliştirme, girişimcilik ve benimle ilgili birçok şeyi bulabilirsiniz."
+  },
+  "about": {
+    "title": "Hakkımda",
+    "description": "Hakkımda merak ettiğin her şeyi bu sayfada bulabilirsin."
+  },
+  "contact": {
+    "title": "İletişim",
+    "description": "Bana iletişim formunu kullanarak veya sosyal medya hesaplarımdan ulaşabilirsiniz."
+  },
+  "blog": {
+      "title": "Blog",
+      "description": "Yazılım geliştirme, girişimcilik ve benimle ilgili birçok şeyi blogumda bulabilirsiniz."
+  },
+  "projects": {
+      "title": "Projeler",
+      "description": "Geliştirdiğim projeleri/ürünleri bu sayfada bulabilirsiniz."
+  }
+}

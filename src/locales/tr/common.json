@@ -1,0 +1,20 @@
+{
+  "search": "Ara...",
+  "no-data": "Veri bulunamadı.",
+  "header": {
+    "lets-talk": "İletişim",
+    "blog": "Blog",
+    "projects": "Projeler",
+    "about": "Hakkımda",
+    "contact": "İletişim",
+    "resume": "CV"
+  },
+  "footer": {
+    "copyright": "© {{year}} {{site}}. Tüm hakları saklıdır."
+  },
+  "404": {
+    "title": "Sayfa bulunamadı!",
+    "description": "Tıkladığın bağlantı bozuk olabilir veya sayfa kaldırılmış olabilir.",
+    "button": "Ana sayfaya dön"
+  }
+}

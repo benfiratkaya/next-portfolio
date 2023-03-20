@@ -1,0 +1,9 @@
+{
+  "title": "Blog",
+  "description": "You can find my experiences and the writings I want to share here.",
+  "related-posts": "Related Posts",
+  "no-posts": "No posts found.",
+  "published": "Published on {{date}}",
+  "search-title": "Search results for \"{{query}}\"",
+  "all": "All"
+}

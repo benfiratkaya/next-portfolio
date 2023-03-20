@@ -1,0 +1,9 @@
+{
+  "title": "Blog",
+  "description": "Tecrübelerim ve paylaşmak istediğim yazıları burada bulabilirsin.",
+  "related-posts": "Diğer Yazılar",
+  "no-posts": "Yazı bulunamadı.",
+  "published": "{{date}} tarihinde paylaşıldı",
+  "search-title": "\"{{query}}\" için arama sonuçları",
+  "all": "Tümü"
+}

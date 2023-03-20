@@ -1,0 +1,8 @@
+{
+  "title": "Projects",
+  "description": "You can find the projects I have completed/am currently involved in here.",
+  "published": "Published on {{date}}",
+  "no-projects": "No projects found.",
+  "recent-projects": "Recent Projects",
+  "visit-project": "View Project"
+}

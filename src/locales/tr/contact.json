@@ -1,0 +1,18 @@
+{
+  "title": "İletişim",
+  "description": "Formu doldurarak bana ulaşabilirsiniz. En kısa sürede size geri dönüş yapacağım. Ayrıca sosyal medya hesaplarım üzerinden de bana ulaşabilirsiniz.",
+  "form": {
+    "error": {
+      "message": "Mesaj gönderilirken bir hata meydana geldi!"
+    },
+    "success": {
+      "title": "Mesajınız alındı!",
+      "message": "En kısa sürede size geri dönüş yapacağım. Ayrıca sosyal medya hesaplarım üzerinden de bana ulaşabilirsiniz."
+    },
+    "name": "Ad",
+    "email": "Email",
+    "subject": "Konu",
+    "message": "Mesaj",
+    "submit": "Mesaj Gönder"
+  }
+}

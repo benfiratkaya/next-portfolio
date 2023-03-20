@@ -1,0 +1,22 @@
+{
+  "home": {
+    "title": "Dev and Entrepreneur",
+    "description": "I am a developer specialized in software development and entrepreneurship. You can find many things related to software development, entrepreneurship, and myself on this website."
+  },
+  "about": {
+    "title": "About Me",
+    "description": "You can find everything you're curious about me on this page."
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "You can contact me via the contact form or my social media accounts."
+  },
+  "blog": {
+      "title": "Blog",
+      "description": "You can find software development, entrepreneurship, and many things related to me on my blog."
+  },
+  "projects": {
+      "title": "Projects",
+      "description": "You can find the projects/products that I have developed on this page."
+  }
+}

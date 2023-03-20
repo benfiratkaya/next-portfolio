@@ -1,0 +1,20 @@
+{
+  "search": "Search...",
+  "no-data": "No data was found.",
+  "header": {
+    "lets-talk": "Let's Talk!",
+    "blog": "Blog",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact",
+    "resume": "Resume"
+  },
+  "footer": {
+    "copyright": "© {{year}} {{site}}. All rights reserved."
+  },
+  "404": {
+    "title": "Page not found!",
+    "description": "Please check the URL in the address bar and try again.",
+    "button": "Go to homepage"
+  }
+}
