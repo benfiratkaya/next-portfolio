@@ -34,8 +34,8 @@ export default function handler(
     replyTo: fields.email,
     to: process.env.CONTACT_EMAIL,
     subject: fields.subject,
-    text: fields.message + " | Sent from: " + fields.email,
-    html: `<div>${fields.message}</div><p>Sent from: ${fields.email}</p>`
+    text: `${fields.message} | Sent from: ${fields.name}, ${fields.email}`,
+    html: `<div>${fields.message}</div><p>Sent from: ${fields.name}, ${fields.email}</p>`
   }
   
   transporter.sendMail(mailData, function (err: any, info: any) {
