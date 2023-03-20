@@ -22,14 +22,15 @@ const SanityImage: React.FC<SanityImageProps & React.HTMLProps<HTMLImageElement>
         configuredSanityClient,
         image
     );
+    const blurData = image?.asset?.metadata?.lqip;
 
     return (
         <NextImage
             {...imageProps}
             style={{ width: '100%', height: 'auto' }}
             sizes="(max-width: 800px) 100vw, 800px"
-            placeholder="blur"
-            blurDataURL={image.asset.metadata.lqip}
+            placeholder={blurData ? "blur" : null}
+            blurDataURL={blurData}
             alt={alt}
             {...props}
         />

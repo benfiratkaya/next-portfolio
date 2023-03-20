@@ -3,6 +3,7 @@ import {PortableText} from "@portabletext/react";
 import {TypedObject} from "@portabletext/types";
 import {classNames} from "@/helpers/classNames";
 import CodeBlock from "@/components/CodeBlock";
+import ImageBlock from "@/components/ImageBlock";
 
 type ContentProps = {
     children: TypedObject | TypedObject[];
@@ -12,6 +13,7 @@ type ContentProps = {
 const components = {
     types: {
         code: CodeBlock,
+        image: ImageBlock,
     }
 }
 
