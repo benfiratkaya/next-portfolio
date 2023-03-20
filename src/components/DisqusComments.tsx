@@ -8,7 +8,7 @@ type DisqusCommentsProps = {
 const DisqusComments = ({ id, title }: DisqusCommentsProps) => {
   const disqusShortname = process.env.NEXT_PUBLIC_DISQUS_SHORT_NAME;
   const disqusConfig = {
-    url: "https://localhost/post-slug",
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${id}`,
     identifier: id,
     title: title
   }

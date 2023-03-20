@@ -1,3 +1,64 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html, body, #__next {
+    @apply h-full;
+}
+
+code[class*=language-], pre[class*=language-] {
+    @apply !text-sm !font-mono !bg-gray-900;
+}
+
+.button {
+    @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400
+}
+
+.gradientTitle {
+    @apply block font-extrabold text-transparent text-3xl bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600
+}
+
+.blogSearch {
+    @apply block w-full md:w-[250px] pl-10 pr-2 py-2 text-sm border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none;
+    box-sizing: border-box;
+}
+
+.hoverable-img {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+.hoverable-img img {
+    width: 100%;
+
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+.hoverable-img:hover img {
+    transform: scale(1.1);
+}
+
+.hover-underline-animation {
+    display: inline-flex;
+    position: relative;
+    @apply text-black
+}
+
+.hover-underline-animation::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+    @apply bg-black
+}
+
+.hover-underline-animation:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}

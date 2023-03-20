@@ -1,5 +1,3 @@
-'use client'
-
 import {useState} from "react";
 import axios from "axios";
 import {CheckBadgeIcon} from "@heroicons/react/24/solid";
@@ -7,8 +5,10 @@ import Label from "@/components/Label";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
 import Button from "@/components/Button";
+import useTranslation from "next-translate/useTranslation";
 
 const ContactForm = () => {
+  const {t} = useTranslation("contact");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -45,10 +45,14 @@ const ContactForm = () => {
   
   if (status === 'sent')
     return (
-      <div className="flex flex-col items-center justify-center p-12 border border-gray-100 rounded-lg bg-white">
+      <div className="flex flex-col items-center justify-center p-12 border border-gray-100 rounded-lg bg-white text-center">
         <CheckBadgeIcon className="w-20 h-20 text-emerald-500"/>
-        <h2 className="text-2xl font-bold text-emerald-800 mt-3 mb-2">Thanks for contacting me!</h2>
-        <p className="text-emerald-900 text-center">I will get back to you as soon as possible! You can also contact me through my social media links.</p>
+        <h2 className="text-2xl font-bold text-emerald-800 mt-3 mb-2">
+          {t("form.success.title")}
+        </h2>
+        <p className="text-emerald-900 text-center">
+          {t("form.success.message")}
+        </p>
       </div>
     )
   
@@ -61,7 +65,9 @@ const ContactForm = () => {
       )}
       <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
         <div className="sm:col-span-2">
-          <Label id="fullName">Name:</Label>
+          <Label id="fullName">
+            {t("form.name")}
+          </Label>
           <div className="mt-1">
             <Input
               type="text"
@@ -75,7 +81,9 @@ const ContactForm = () => {
           </div>
         </div>
         <div className="sm:col-span-2">
-          <Label id="email">Email</Label>
+          <Label id="email">
+            {t("form.email")}
+          </Label>
           <div className="mt-1">
             <Input
               id="email"
@@ -89,7 +97,9 @@ const ContactForm = () => {
           </div>
         </div>
         <div className="sm:col-span-2">
-          <Label id="subject">Subject</Label>
+          <Label id="subject">
+            {t("form.subject")}
+          </Label>
           <div className="mt-1">
             <Input
               type="text"
@@ -102,7 +112,9 @@ const ContactForm = () => {
           </div>
         </div>
         <div className="sm:col-span-2">
-          <Label id="message">Message</Label>
+          <Label id="message">
+            {t("form.message")}
+          </Label>
           <div className="mt-1">
           <Textarea
             id="message"
@@ -119,7 +131,7 @@ const ContactForm = () => {
               type="submit"
               isLoading={status === 'sending'}
           >
-            Submit
+            {t("form.submit")}
           </Button>
         </div>
       </form>
