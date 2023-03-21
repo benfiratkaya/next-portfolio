@@ -18,6 +18,8 @@ type PageProps = {
 
 const AboutPage = ({content}: PageProps) => {
   const {t} = useTranslation("about");
+  if (content === null) return "Edit this page in Sanity Studio!"
+
   return (
       <>
         <NextSeo

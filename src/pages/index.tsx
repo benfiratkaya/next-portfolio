@@ -18,6 +18,8 @@ type PageProps = {
 
 export default function HomePage({content}: PageProps) {
     const {t} = useTranslation("home");
+    if (content === null) return "Edit this page in Sanity Studio!"
+
     return (
         <>
             <NextSeo
