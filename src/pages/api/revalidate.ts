@@ -60,7 +60,21 @@ export default async function revalidate(
     }
 }
 
-type StaleRoute = '/' | '/about' | `/blog/${string}` | `/blog/categories/${string}` | `/projects/${string}`
+type StaleRoute =
+    `/` |
+    `/${string}` |
+    `/about` |
+    `/${string}/about` |
+    `/blog` |
+    `/${string}/blog` |
+    `/blog/${string}` |
+    `/${string}/blog/${string}` |
+    `/blog/categories/${string}` |
+    `/${string}/blog/categories/${string}` |
+    `/projects` |
+    `/${string}/projects` |
+    `/projects/${string}` |
+    `/${string}/projects/${string}`
 
 async function queryStaleRoutes(
     body: Pick<ParseBody['body'], '_type' | '_id' | 'date' | 'slug'>
@@ -68,94 +82,107 @@ async function queryStaleRoutes(
     const client = createClient({ projectId, dataset, apiVersion, useCdn: false })
 
     // Handle possible deletions
-    if (body._type === 'post') {
-        const exists = await client.fetch(groq`*[_id == $id][0]`, { id: body._id })
-        if (!exists) {
-            let staleRoutes: StaleRoute[] = ['/']
-            if ((body.slug as any)?.current) {
-                staleRoutes.push(`/blog/${(body.slug as any).current}`)
-            }
-            // Assume that the post document was deleted. Query the datetime used to sort "More stories" to determine if the post was in the list.
-            const moreStories = await client.fetch(
-                groq`count(
-          *[_type == "post"] | order(date desc, _updatedAt desc) [0...3] [dateTime(date) > dateTime($date)]
-        )`,
-                { date: body.date }
-            )
-            // If there's less than 3 posts with a newer date, we need to revalidate everything
-            if (moreStories < 3) {
-                return [...new Set([...(await queryAllRoutes(client)), ...staleRoutes])]
-            }
-            return staleRoutes
+    const exists = await client.fetch(groq`*[_id == $id][0]`, { id: body._id })
+    if (!exists) {
+        const slug = (body.slug as any)?.current;
+        let staleRoutes: StaleRoute[] = [];
+        switch (body._type) {
+            case 'post':
+                staleRoutes = mergeLocales(['/blog'])
+                if (slug) staleRoutes.concat(mergeLocales([`/blog/${slug}`]));
+                return staleRoutes;
+            case 'blogCategory':
+                if (slug) staleRoutes.concat(mergeLocales([`/blog/categories/${slug}`]));
+                return staleRoutes;
+            case 'project':
+                staleRoutes = mergeLocales(['/projects'])
+                if (slug) staleRoutes.concat(mergeLocales([`/blog/${slug}`]));
+                return staleRoutes;
+            case 'projectCategory':
+                staleRoutes = mergeLocales(['/projects'])
+                return staleRoutes;
         }
     }
 
     switch (body._type) {
-        case 'author':
-            return await queryStaleAuthorRoutes(client, body._id)
+        case 'home':
+            return mergeLocales(['/']);
+        case 'about':
+            return mergeLocales(['/about']);
         case 'post':
-            return await queryStalePostRoutes(client, body._id)
-        case 'settings':
-            return await queryAllRoutes(client)
+            return mergeLocales(await queryStalePostRoutes(client, body._id))
+        case 'blogCategory':
+            return mergeLocales(await queryStaleBlogCategoryRoutes(client, body._id))
+        case 'project':
+            return mergeLocales(await queryStaleProjectRoutes(client, body._id))
+        case 'projectCategory':
+            return mergeLocales(['/projects']);
         default:
             throw new TypeError(`Unknown type: ${body._type}`)
     }
 }
 
-async function _queryAllRoutes(client: SanityClient): Promise<string[]> {
-    return await client.fetch(groq`*[_type == "post"].slug.current`)
-}
+function mergeLocales(routes: StaleRoute[]): StaleRoute[] {
+    const { locales } = i18nConfig;
+    let mergedRoutes = routes;
+    routes.map((route) => {
+        locales.map((locale) => {
+            mergedRoutes.push(`/${locale}${route}`);
+        });
+    });
 
-async function queryAllRoutes(client: SanityClient): Promise<StaleRoute[]> {
-    const slugs = await _queryAllRoutes(client)
-
-    return ['/', ...slugs.map((slug) => `/blog/${slug}` as StaleRoute)]
-}
-
-async function mergeWithMoreStories(
-    client,
-    slugs: string[]
-): Promise<string[]> {
-    const moreStories = await client.fetch(
-        groq`*[_type == "post"] | order(date desc, _updatedAt desc) [0...3].slug.current`
-    )
-    if (slugs.some((slug) => moreStories.includes(slug))) {
-        const allSlugs = await _queryAllRoutes(client)
-        return [...new Set([...slugs, ...allSlugs])]
-    }
-
-    return slugs
-}
-
-async function queryStaleAuthorRoutes(
-    client: SanityClient,
-    id: string
-): Promise<StaleRoute[]> {
-    let slugs = await client.fetch(
-        groq`*[_type == "author" && _id == $id] {
-    "slug": *[_type == "post" && references(^._id)].slug.current
-  }["slug"][]`,
-        { id }
-    )
-
-    if (slugs.length > 0) {
-        slugs = await mergeWithMoreStories(client, slugs)
-        return ['/', ...slugs.map((slug) => `/blog/${slug}`)]
-    }
-
-    return []
+    return mergedRoutes;
 }
 
 async function queryStalePostRoutes(
     client: SanityClient,
     id: string
 ): Promise<StaleRoute[]> {
-    let slugs = await client.fetch(
-        groq`*[_type == "post" && _id == $id].slug.current`,
-        { id }
-    )
+    let slugs = await client.fetch(groq`
+        *[_type == "post" && _id == $id].slug.current
+    `, { id })
+    let categorySlugs = await client.fetch(groq`
+        *[_type == "post" && _id == $id] {
+          categories[]->{
+            "slug": slug.current
+          }
+        }[0]["categories"]
+    `, { id })
 
-    slugs = await mergeWithMoreStories(client, slugs)
+    return [
+        '/blog',
+        ...slugs.map((slug) => `/blog/${slug}`),
+        ...categorySlugs.map((category) => `/blog/categories/${category.slug}`),
+    ]
+}
 
-    return ['/', ...slugs.map((slug) => `/blog/${slug}`)]
+async function queryStaleBlogCategoryRoutes(
+    client: SanityClient,
+    id: string
+): Promise<StaleRoute[]> {
+    let slugs = await client.fetch(groq`
+        *[_type == "blogCategory" && _id == $id].slug.current
+    `, { id })
+    let postSlugs = await client.fetch(groq`
+        *[_type == "blogCategory" && _id == $id] {
+          "slug": *[_type == "post" && references(^._id)].slug.current
+        }["slug"][]
+    `, { id })
+
+    return [
+        '/blog',
+        ...slugs.map((slug) => `/blog/categories/${slug}`),
+        ...postSlugs.map((slug) => `/blog/${slug}`),
+    ]
+}
+
+async function queryStaleProjectRoutes(
+    client: SanityClient,
+    id: string
+): Promise<StaleRoute[]> {
+    let slugs = await client.fetch(groq`
+        *[_type == "project" && _id == $id].slug.current
+    `, { id })
+
+    return ['/projects', ...slugs.map((slug) => `/projects/${slug}`)]
 }
