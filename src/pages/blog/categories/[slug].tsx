@@ -100,7 +100,7 @@ export const getStaticPaths = async ({locales, defaultLocale}) => {
     const paths = getPaths('blogCategory', locales, defaultLocale, projectPaths);
     return {
         paths,
-        fallback: false,
+        fallback: 'blocking',
     }
 }
 
