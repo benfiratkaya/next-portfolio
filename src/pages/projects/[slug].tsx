@@ -111,10 +111,15 @@ const ProjectPage = ({project, relatedProjects}: PageProps) => {
 export const getStaticProps: GetStaticProps = async (context) => {
     const {params = {}} = context;
     const slug = params.slug as string;
+    const project = await getProjectBySlug(slug);
+
+    if (!project) return { notFound: true }
+
+    const relatedProjects = await getRelatedProjects(slug)
     return {
         props: {
-            project: await getProjectBySlug(slug),
-            relatedProjects: await getRelatedProjects(slug)
+            project,
+            relatedProjects
         }
     }
 }

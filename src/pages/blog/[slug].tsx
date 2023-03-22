@@ -109,10 +109,14 @@ const BlogPostPage = ({post, relatedPosts}: PageProps) => {
 export const getStaticProps: GetStaticProps = async (context) => {
     const {params = {}} = context;
     const slug = params.slug as string;
+    const post = await getPostBySlug(slug);
+    if (!post) return { notFound: true }
+
+    const relatedPosts = await getRelatedPosts(slug);
     return {
         props: {
-            post: await getPostBySlug(slug),
-            relatedPosts: await getRelatedPosts(slug)
+            post,
+            relatedPosts
         }
     }
 }

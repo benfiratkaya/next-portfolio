@@ -80,11 +80,17 @@ const BlogCategoryPage = ({
 export const getStaticProps: GetStaticProps = async (context) => {
     const {params = {}} = context;
     const slug = params.slug as string;
+    const category = await getBlogCategoryBySlug(slug);
+
+    if (!category) return { notFound: true }
+
+    const posts = await getPostsByCategory(slug);
+    const categories = await getBlogCategories();
     return {
         props: {
-            category: await getBlogCategoryBySlug(slug),
-            posts: await getPostsByCategory(slug),
-            categories: await getBlogCategories(),
+            category,
+            posts,
+            categories
         }
     }
 }
