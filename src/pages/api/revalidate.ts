@@ -26,7 +26,7 @@ import { createClient, groq, type SanityClient } from 'next-sanity'
 import { type ParseBody, parseBody } from 'next-sanity/webhook'
 
 export { config } from 'next-sanity/webhook'
-
+const { locales } = i18nConfig;
 export default async function revalidate(
     req: NextApiRequest,
     res: NextApiResponse
@@ -77,7 +77,7 @@ type StaleRoute =
     `/${string}/projects/${string}`
 
 async function queryStaleRoutes(
-    body: Pick<ParseBody['body'], '_type' | '_id' | 'date' | 'slug'>
+    body: Pick<ParseBody['body'], '_type' | '_id' | 'date' | 'slug' | 'categories'>
 ): Promise<StaleRoute[]> {
     const client = createClient({ projectId, dataset, apiVersion, useCdn: false })
 
@@ -89,14 +89,29 @@ async function queryStaleRoutes(
         switch (body._type) {
             case 'post':
                 staleRoutes = mergeLocales(['/blog'])
-                if (slug) staleRoutes.concat(mergeLocales([`/blog/${slug}`]));
+                if (slug) {
+                    const blogCategories = body.categories as any;
+                    if (blogCategories) {
+                        const categoryRefs = blogCategories.map((category: any) => category._ref);
+                        const slugs = await Promise.all(
+                            categoryRefs.map((categoryRef: any) => {
+                                return client.fetch(groq`
+                                    *[_type == "blogCategory" && _id == $id].slug.current
+                                  `, { id: categoryRef });
+                            })
+                        );
+                        staleRoutes.push(...mergeLocales(slugs.map(slug => `/blog/categories/${slug}`)));
+                    }
+
+                    staleRoutes.push(...mergeLocales([`/blog/${slug}`]));
+                }
                 return staleRoutes;
             case 'blogCategory':
-                if (slug) staleRoutes.concat(mergeLocales([`/blog/categories/${slug}`]));
+                if (slug) staleRoutes = mergeLocales([`/blog/categories/${slug}`]);
                 return staleRoutes;
             case 'project':
                 staleRoutes = mergeLocales(['/projects'])
-                if (slug) staleRoutes.concat(mergeLocales([`/blog/${slug}`]));
+                if (slug) staleRoutes.push(...mergeLocales([`/blog/${slug}`]));
                 return staleRoutes;
             case 'projectCategory':
                 staleRoutes = mergeLocales(['/projects'])
@@ -122,14 +137,14 @@ async function queryStaleRoutes(
     }
 }
 
-function mergeLocales(routes: StaleRoute[]): StaleRoute[] {
-    const { locales } = i18nConfig;
-    let mergedRoutes = routes;
-    routes.map((route) => {
-        locales.map((locale) => {
-            mergedRoutes.push(`/${locale}${route}`);
-        });
-    });
+function mergeLocales(routes: string[]): StaleRoute[] {
+    const mergedRoutes = [];
+
+    for (const route of routes) {
+        for (const locale of locales) {
+            mergedRoutes.push(`/${locale}${route}` as StaleRoute);
+        }
+    }
 
     return mergedRoutes;
 }
