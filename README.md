@@ -44,6 +44,15 @@ Access the dashboard at `/studio`.
 ### How do I set up Sanity.io?
 Sign up for a Sanity.io account and create a new project. Then, add the environment variables to the `.env.local` file. (You can find the environment variables in the `.env.example` file.)
 
+### How do I set up Webhooks?
+Sanity.io > Project > Settings > API Settings > Webhooks > Create Webhook.
+
+- **Name:** `revalidate`
+- **URL:** `https://yourdomain.com/api/revalidate`
+- **Trigger on:** `Create, Update, Delete`
+- **Filter:** `_type == "home" || _type == "about" || _type == "post" || _type == "blogCategory" || _type == "project" || _type == "projectCategory"`
+- **Secret:** Create a secret and add it to the `.env.local` file. (SANITY_REVALIDATE_SECRET)
+
 ### How do I set up SMTP?
 Add the environment variables to the `.env.local` file. (You can find the environment variables in the `.env.example` file.)
 
