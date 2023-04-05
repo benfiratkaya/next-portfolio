@@ -1,38 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+    <h1>Next-Portfolio</h1>
+    <p>Publish your personal website quickly and for free. Manage your content with Sanity.io.</p>
+</div>
 
-## Getting Started
+## Why so fast?
 
-First, run the development server:
+Sanity.io provides excellent performance when used in conjunction with Next.js. When you build your application, your content is generated as static pages. If there are any updates on these pages, only the relevant pages are re-rendered using Sanity Webhooks. As a result, you don't need to rebuild the entire application every time a page changes, since only the necessary pages are re-rendered using Sanity Webhooks.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Next.js
+- TypeScript
+- Tailwind CSS
+- Sanity.io
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Features
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- Blog
+- Projects
+- About Me
+- Contact (SMTP)
+- Sanity CMS dashboard
+- Beautifully designed UI.
+- Multi-language support. (i18n)
+- Fully responsive.
+- Incredible performance.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Clone the repository to your local machine.
+2. Navigate to the project directory.
+3. Setup Sanity.io and add the environment variables to the `.env.local` file. (You can find the environment variables in the `.env.example` file.)
+4. Run `npm install` to install all the dependencies.
+5. Run `npm run build` to build the project.
+6. Run `npm run start` to start the production server.
+7. Access the dashboard at `/studio`.
 
-## Learn More
+## FAQ
 
-To learn more about Next.js, take a look at the following resources:
+### How do I access the dashboard?
+Access the dashboard at `/studio`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### How do I set up Sanity.io?
+Sign up for a Sanity.io account and create a new project. Then, add the environment variables to the `.env.local` file. (You can find the environment variables in the `.env.example` file.)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### How do I set up SMTP?
+Add the environment variables to the `.env.local` file. (You can find the environment variables in the `.env.example` file.)
 
-## Deploy on Vercel
+### How do I add a new language?
+Add a new language to the `locales` array in the `i18n.js` file. Then, create a new folder in the `src/locales` directory with the name of the language you added to the `locales` array, add the translation files to the newly created folder. Finally add the language to the `languages` array in the `src/data/languages.ts` file.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Contributions to `next-portfolio` are welcome! If you find a bug or have a feature request, please open an issue on GitHub. If you want to contribute code, please fork the repository and create a pull request.
